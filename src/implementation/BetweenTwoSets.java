@@ -16,16 +16,22 @@ public class BetweenTwoSets {
 		}
 		
 		int count = 0;
-		for(int i = 1;minCommonMultiple * i <= maxCommonDivisor;i *= 2){
-			count++;
+		for(int i = 1;minCommonMultiple * i <= maxCommonDivisor;i++){
+			if(maxCommonDivisor % (minCommonMultiple * i) == 0)count++;
 		}
 		return count;
     }
 	
 	static int getMaxCommonDivisor(int a, int b){
-		if(a < b) return getMaxCommonDivisor(a, b - a);
-		if(a > b) return getMaxCommonDivisor(a - b, b);
-		return a;
+		int smaller = a > b ? b : a;
+		int bigger = a > b ? a : b;
+		int remainder = bigger % smaller;
+		while(remainder != 0){
+			bigger = smaller;
+			smaller = remainder;
+			remainder = bigger % smaller;
+		}
+		return smaller;
 	}
 	
 	static int getMinCommonMultiple(int a, int b){
